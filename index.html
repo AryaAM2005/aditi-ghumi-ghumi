@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Parrot Flying Animation</title>
+
+  <style>
+    body {
+      overflow: hidden;
+      background: #f5faff;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    #parrot {
+      position: absolute;
+      width: 300px;
+      transform-origin: center center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>Aditi Ghumi Ghumi 🦜</h2>
+
+  <img id="parrot" src="op.png" alt="Flying Parrot">
+
+  <script>
+    let angle = 180;
+
+    const centerX = 600;
+    const centerY = 400;
+
+    const radiusX = 250;
+    const radiusY = 180;
+
+    const parrot = document.getElementById("parrot");
+
+    function flyParrot() {
+
+      angle -= 0.8;
+
+      const rad = angle * Math.PI / 180;
+
+      const x = centerX + radiusX * Math.cos(rad);
+      const y = centerY + radiusY * Math.sin(rad);
+
+      parrot.style.left = (x - 150) + "px";
+      parrot.style.top = (y - 150) + "px";
+
+      // Calculate flight direction
+      let tilt = -Math.atan2(
+        radiusY * Math.cos(rad),
+        -radiusX * Math.sin(rad)
+      ) * 180 / Math.PI;
+
+      // Keep the bird upright; never turn upside down
+      tilt = Math.max(-35, Math.min(35, tilt));
+
+      parrot.style.transform = `rotate(${tilt}deg)`;
+
+      if (angle <= -180) {
+        angle = 180;
+      }
+
+      requestAnimationFrame(flyParrot);
+    }
+
+    flyParrot();
+
+  </script>
+
+</body>
+</html>
